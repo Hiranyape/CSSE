@@ -4,6 +4,8 @@ const { mongoose } = require('mongoose');
 
 const userRoutes = require("./routes/UserRoute");
 const productRoute = require("./routes/ProductRoute")
+const OrderRoutes = require("./controllers/OrderController")
+const ConstructionsRoutes = require("./controllers/ConstructionsController")
 
 require('dotenv').config();
 
@@ -14,6 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/user',userRoutes);
 app.use('/api/product',productRoute)
+app.use("/Order", OrderRoutes)
+app.use("/Constructions", ConstructionsRoutes)
 
 const uri = process.env.URI;
 mongoose.set('strictQuery', false);

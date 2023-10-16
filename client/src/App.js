@@ -19,6 +19,9 @@ import Login from "./pages/LoginPage"
 import SupplierOrders from './pages/SupplierOrders';
 import Invoice from './pages/InvoiceOrders';
 import StaffNavbar from './components/StaffNavbar';
+import SiteForm from "./components/SiteForm.js";
+import CusConstruction from "./components/CusConstruction";
+import Construction from "./components/Construction";
 
 function App() {
   const { user } = useAuthContext()
@@ -81,6 +84,10 @@ function App() {
           <Route path="/approved-order" element={<ApprovedOrders />} />
           <Route path="/all-order" element={<DisplayAllOrders />} />
           <Route path="/order-details/:orderId" element={<OrderDetails />} />
+		   <Route path="/form" component={ConstructionForm}></Route>
+          <Route path="/siteForm" component={SiteForm}></Route>
+		  <Route path="/cus_construction" component={CusConstruction}></Route>
+          <Route path="/construction" component={Construction}></Route>
         </Routes>
     </BrowserRouter>
     </div>

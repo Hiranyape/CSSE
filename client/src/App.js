@@ -1,22 +1,78 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from 'react';
+import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css"; 
+import { Routes, Route, Navigate, BrowserRouter, Router } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
+import { useAuthContext } from './hooks/useAuthContext';
+import SupplierNavbar from './components/SupplierNavbar';
+import SupplierDashboard from './pages/SupplierDashboard';
+import BoxWrapper from './components/BoxWrapper';
 import AdminOrders from "./components/AdminOrders";
 import CusOrder from "./components/CusOrder";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import Orders from "./components/Orders";
 import MakePurchaseOrder from "./pages/MakePurchaseOrder";
 import PlacedOrders from "./pages/PlacedOrders";
 import ApprovedOrders from "./pages/ApprovedOrders";
 import DisplayAllOrders from "./pages/DisplayAllOrders";
 import OrderDetails from "./pages/OrderDetails";
+import Login from "./pages/LoginPage"
+import SupplierOrders from './pages/SupplierOrders';
+import Invoice from './pages/InvoiceOrders';
+import StaffNavbar from './components/StaffNavbar';
 
 function App() {
+  const { user } = useAuthContext()
+
+  const isSupplier = user && user.role === 'supplier';
+  const isStaff = user && user.role === 'staff';
+
+  console.log(isSupplier)
+
   return (
-    <Router>
-      <div>
-        <Routes>
+    <div className="App">
+     <BrowserRouter>
+     {isSupplier ? <SupplierNavbar/> : <div></div>}
+     {isSupplier ? <StaffNavbar/> : <div></div>}
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            !user ?
+          <Login/>
+          :
+          <BoxWrapper>
+          <SupplierDashboard/>
+          </BoxWrapper>}
+          exact
+        />
+        <Route
+          path="/supplierDashboard"
+          element={
+            user ?
+          <BoxWrapper>
+            <SupplierDashboard/>
+          </BoxWrapper>:<Navigate to="/"/> }
+          exact
+        />
+         <Route
+          path="/supplierOrders"
+          element={
+            user ?
+          <BoxWrapper>
+            <SupplierOrders/>
+          </BoxWrapper>:<Navigate to="/"/> }
+          exact
+        />
+        <Route
+          path="/invoice"
+          element={
+          user ?
+          <BoxWrapper>
+            <Invoice/>
+          </BoxWrapper> :<Navigate to="/"/>}
+          exact
+        />
           <Route path="/adminOrders" element={<AdminOrders />} />
           <Route path="/cusorder" element={<CusOrder />} />
           <Route path="/orders" element={<Orders />} />
@@ -26,9 +82,8 @@ function App() {
           <Route path="/all-order" element={<DisplayAllOrders />} />
           <Route path="/order-details/:orderId" element={<OrderDetails />} />
         </Routes>
-        <ToastContainer position="top-right" />
-      </div>
-    </Router>
+    </BrowserRouter>
+    </div>
   );
 }
 

@@ -1,35 +1,46 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import axios from 'axios';
 
-export const useLogin = ()=>{
-    const [error,setError] = useState(null)
-    const[isLoading,setIsLoading] = useState(null)
+export const useLogin = () => {
+    const [error, setError] = useState("")
+    const [isLoading, setIsLoading] = useState(null)
     const { dispatch } = useAuthContext()
 
-    const login = async(email,password) =>{
+    const login = async (email, password) => {
         setIsLoading(true)
         setError(null)
-
-        const response = await fetch('/api/user/login',{
-            method: "POST",
-            headers: {'Content-Type':"application/json"},
-            body:JSON.stringify({email,password})
-        })
-
-        const json = await response.json()
-        if(!response.ok){
-            setIsLoading(false)
-            setError(json.error)
-        }if(response.ok){
-            localStorage.setItem('user',JSON.stringify(json))
-            dispatch({type:"LOGIN",payload:json})
-            setIsLoading(true)
+        const data = {
+            email,
+            password
         }
 
+        axios.post('http://localhost:5000/api/user/login', data, {
+            headers: { 'Content-Type': "application/json" }
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    const json = response.data
+                    localStorage.setItem('user', JSON.stringify(json))
+                    dispatch({ type: "LOGIN", payload: json })
+                    setIsLoading(true)
+                } else {
+                    setIsLoading(false)
+                    setError(response.message)
+                }
+
+            }).catch(error => {
+                setIsLoading(false);
+                if (error.response) {
+                  setError(error.response.data.message)
+                } else {
+                  setError('An error occurred while trying to log in. Please try again later.')
+                }
+            })
 
     }
 
-    return {login,isLoading,error}
+    return { login, isLoading, error }
 
-    
+
 }

@@ -35,11 +35,19 @@ const purchaseOrderSchema = new mongoose.Schema({
       },
     },
   ],
+  supplierstatus: {
+    type: String,
+    enum: ["Wait", "Approve", "Partial Approve", "Decline", "Return","Pending"],
+    default: 'Pending', // Set the default status to "placed" if not specified
+  },
+  message: {
+    type: String,
+  },
   status: {
     type: String,
     enum: ['approved', 'placed', 'declined'],
     default: 'placed', // Set the default status to "placed" if not specified
-  },
+  }
 });
 
 const PurchaseOrder = mongoose.model('PurchaseOrder', purchaseOrderSchema);

@@ -8,20 +8,36 @@ function ApprovedOrders() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Fetch approved orders from your backend API
-    axios.get('http://localhost:5000/purchaseOrder/approved').then((response) => {
-      setApprovedOrders(response.data);
-      setLoading(false);
-    });
+    // Fetch approved orders from backend API
+    axios.get('http://localhost:5000/purchaseOrder/approved')
+      .then((response) => {
+        setApprovedOrders(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        // Handle the error (e.g., display an error message)
+        console.error(error);
+        setLoading(false);
+      });
 
     // Fetch suppliers and products separately
-    axios.get('http://localhost:5000/api/user/users/supplier/').then((response) => {
-      setSuppliers(response.data);
-    });
+    axios.get('http://localhost:5000/api/user/users/supplier/')
+      .then((response) => {
+        setSuppliers(response.data);
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
 
-    axios.get('http://localhost:5000/api/product/').then((response) => {
-      setProducts(response.data);
-    });
+    axios.get('http://localhost:5000/api/product/')
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
   }, []);
 
   const getSupplierNameById = (supplierId) => {

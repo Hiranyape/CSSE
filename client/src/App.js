@@ -6,7 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import Orders from "./components/Orders";
-import MakePurchaseOrder from "./pages/MakePurchaseOrders";
+import MakePurchaseOrder from "./pages/MakePurchaseOrder";
 import PlacedOrders from "./pages/PlacedOrders";
 import ApprovedOrders from "./pages/ApprovedOrders";
 import DisplayAllOrders from "./pages/DisplayAllOrders";

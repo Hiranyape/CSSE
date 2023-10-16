@@ -109,8 +109,6 @@ async function calculateTotalPrice(purchaseOrderId) {
   }
 }
 
-
-
 module.exports = {
   createPurchaseOrder,
   getUserPurchaseOrders,

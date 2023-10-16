@@ -75,10 +75,10 @@ function PlacedOrders() {
   }
 
   return (
-    <div>
+    <div className="container mt-5">
       <h2>Placed Orders</h2>
-      <table>
-        <thead>
+      <table className="table table-bordered">
+        <thead className="table-dark">
           <tr>
             <th>Company Details</th>
             <th>Supplier</th>
@@ -98,32 +98,48 @@ function PlacedOrders() {
               <td>{new Date(order.requiredByDate).toLocaleDateString()}</td>
               <td>{order.status}</td>
               <td>
-                <select
-                  value={updatedStatus[order._id] || ''}
-                  onChange={(e) => {
-                    setUpdatedStatus({ ...updatedStatus, [order._id]: e.target.value });
-                  }}
-                >
-                  <option value="">Select Status</option>
-                  {availableStatuses.map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-                <button onClick={() => handleStatusUpdate(order._id)}>Update</button>
+                <div className="d-flex">
+                  <select
+                    value={updatedStatus[order._id] || ''}
+                    onChange={(e) => {
+                      setUpdatedStatus({ ...updatedStatus, [order._id]: e.target.value });
+                    }}
+                    className="form-control"
+                  >
+                    <option value="">Select Status</option>
+                    {availableStatuses.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={() => handleStatusUpdate(order._id)}
+                    className="btn btn-primary ml-2"
+                  >
+                    Update
+                  </button>
+                </div>
               </td>
               <td>
-                <ul>
-                  {order.items.map((item, index) => (
-                    <li key={index}>
-                      Product: {getProductNameById(item.product)}
-                      <br />
-                      Quantity: {item.quantity}<br />
-                      Agreed Price: {item.agreedPrice}
-                    </li>
-                  ))}
-                </ul>
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th>Quantity</th>
+                      <th>Agreed Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {order.items.map((item, index) => (
+                      <tr key={index}>
+                        <td>{getProductNameById(item.product)}</td>
+                        <td>{item.quantity}</td>
+                        <td>{item.agreedPrice}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </td>
             </tr>
           ))}

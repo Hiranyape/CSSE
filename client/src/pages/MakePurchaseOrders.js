@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function MakePurchaseOrder() {
+  const navigate = useNavigate();
   const [suppliers, setSuppliers] = useState([]);
   const [orderData, setOrderData] = useState({
     companyDetails: '',
@@ -69,7 +71,7 @@ function MakePurchaseOrder() {
     }, 0);
 
     // Set the status based on the total price
-    const status = totalPrice < 20000 ? 'approved' : 'palced';
+    const status = totalPrice < 20000 ? 'approved' : 'placed';
 
     // Combine order data with the product details and status
     const combinedData = {
@@ -94,31 +96,38 @@ function MakePurchaseOrder() {
         requiredByDate: '',
       });
       setProductDetails([]);
+
+      // Navigate to the "/all-order" page after successful submission
+      navigate('/all-order');
     });
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <h2>Create Purchase Order</h2>
+      <div className="border p-4">
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Company Details:</label>
+        <div className="mb-3">
+          <label className="form-label">Company Details:</label>
           <input
             type="text"
+            className="form-control"
             name="companyDetails"
             value={orderData.companyDetails}
             onChange={handleInputChange}
             required
           />
         </div>
-        <div>
-          <label htmlFor="supplier">Supplier</label>
+        <div className="mb-3">
+          <label htmlFor="supplier" className="form-label">
+            Supplier
+          </label>
           <select
             id="supplier"
+            className="form-select"
             name="supplier"
             value={orderData.supplier}
             onChange={handleInputChange}
-            className="form-control"
             required
           >
             <option value="">Select a supplier</option>
@@ -129,30 +138,33 @@ function MakePurchaseOrder() {
             ))}
           </select>
         </div>
-        <div>
-          <label>Delivery Address Details:</label>
+        <div className="mb-3">
+          <label className="form-label">Delivery Address Details:</label>
           <input
             type="text"
+            className="form-control"
             name="deliveryAddressDetails"
             value={orderData.deliveryAddressDetails}
             onChange={handleInputChange}
             required
           />
         </div>
-        <div>
-          <label>Required By Date:</label>
+        <div className="mb-3">
+          <label className="form-label">Required By Date:</label>
           <input
             type="date"
+            className="form-control"
             name="requiredByDate"
             value={orderData.requiredByDate}
             onChange={handleInputChange}
             required
           />
         </div>
-        <div>
-          <label>Products:</label>
+        <div className="mb-3">
+          <label className="form-label">Products:</label>
           <select
             name="products"
+            className="form-select"
             value={selectedProduct}
             onChange={(e) => setSelectedProduct(e.target.value)}
             required
@@ -164,37 +176,44 @@ function MakePurchaseOrder() {
               </option>
             ))}
           </select>
-          <div>
-            <label>Quantity:</label>
+          <div className="mb-2">
+            <label className="form-label">Quantity:</label>
             <input
               type="number"
+              className="form-control"
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
               required
             />
-            <label>Agreed Price:</label>
+          </div>
+          <div className="mb-2">
+            <label className="form-label">Agreed Price:</label>
             <input
               type="number"
+              className="form-control"
               value={agreedPrice}
               onChange={(e) => setAgreedPrice(Number(e.target.value))}
               required
             />
-            <button type="button" onClick={handleProductSelect}>
-              Add Product
-            </button>
           </div>
+          <button type="button" className="btn btn-primary" onClick={handleProductSelect}>
+            Add Product
+          </button>
         </div>
         {productDetails.map((item, index) => (
-          <div key={index}>
+          <div key={index} className="mb-3">
             <p>Product: {item.product}</p>
             <p>Quantity: {item.quantity}</p>
             <p>Agreed Price: {item.agreedPrice}</p>
           </div>
         ))}
-        <div>
-          <button type="submit">Submit Purchase Order</button>
+        <div className="mb-3">
+          <button type="submit" className="btn btn-success">
+            Submit Purchase Order
+          </button>
         </div>
       </form>
+      </div>
     </div>
   );
 }

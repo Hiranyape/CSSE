@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 function OrderDetails(props) {
-  const { orderId } = useParams()
+  const { orderId } = useParams();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [suppliers, setSuppliers] = useState([]);
@@ -41,41 +41,66 @@ function OrderDetails(props) {
   }
 
   return (
-    <div>
+    <div className="container mt-5">
       <h2>Order Details</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Company Details</th>
-            <th>Supplier</th>
-            <th>Delivery Address</th>
-            <th>Required By Date</th>
-            <th>Status</th>
-            <th>Products</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{order.companyDetails}</td>
-            <td>{getSupplierNameById(order.supplier)}</td>
-            <td>{order.deliveryAddressDetails}</td>
-            <td>{new Date(order.requiredByDate).toLocaleDateString()}</td>
-            <td>{order.status}</td>
-            <td>
-              <ul>
-                {order.items.map((item, index) => (
-                  <li key={index}>
-                    Product: {getProductNameById(item.product)}
-                    <br />
-                    Quantity: {item.quantity}<br />
-                    Agreed Price: {item.agreedPrice}
-                  </li>
-                ))}
-              </ul>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">Company Details</h5>
+          <p className="card-text">{order.companyDetails}</p>
+        </div>
+      </div>
+
+      <div className="card mt-3">
+        <div className="card-body">
+          <h5 className="card-title">Supplier</h5>
+          <p className="card-text">{getSupplierNameById(order.supplier)}</p>
+        </div>
+      </div>
+
+      <div className="card mt-3">
+        <div className="card-body">
+          <h5 className="card-title">Delivery Address</h5>
+          <p className="card-text">{order.deliveryAddressDetails}</p>
+        </div>
+      </div>
+
+      <div className="card mt-3">
+        <div className="card-body">
+          <h5 className="card-title">Required By Date</h5>
+          <p className="card-text">{new Date(order.requiredByDate).toLocaleDateString()}</p>
+        </div>
+      </div>
+
+      <div className="card mt-3">
+        <div className="card-body">
+          <h5 className="card-title">Status</h5>
+          <p className="card-text">{order.status}</p>
+        </div>
+      </div>
+
+      <div className="card mt-3">
+        <div className="card-body">
+          <h5 className="card-title">Products</h5>
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Agreed Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {order.items.map((item, index) => (
+                <tr key={index}>
+                  <td>{getProductNameById(item.product)}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.agreedPrice}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }

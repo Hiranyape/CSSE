@@ -109,6 +109,13 @@ async function calculateTotalPrice(purchaseOrderId) {
   }
 }
 
+async function getAllWithProducts() {
+  const orders = await PurchaseOrder.find({}).populate('items.product');
+  return orders;
+}
+
+
+
 module.exports = {
   createPurchaseOrder,
   getUserPurchaseOrders,
@@ -118,5 +125,6 @@ module.exports = {
   approvePurchaseOrder,
   calculateTotalPrice,
   getAllPurchaseOrders,
-  getAllApprovedPurchaseOrders
+  getAllApprovedPurchaseOrders,
+  getAllWithProducts
 };

@@ -8,7 +8,10 @@ class PurchaseOrderRepository {
   }
 
   async getAll() {
-    const orders = await PurchaseOrder.find({});
+    const orders = await PurchaseOrder.find({}).populate({
+      path: 'items.product',
+      model: 'Product', 
+    });
     return orders;
   }
 
@@ -49,9 +52,9 @@ class PurchaseOrderRepository {
     return updatedOrder;
   }
 
-  async calculateTotalPrice(purchaseOrderId) {
-    // Implement the calculation logic 
-  }
+  
+
+ 
 }
 
 module.exports = new PurchaseOrderRepository();

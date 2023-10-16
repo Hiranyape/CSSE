@@ -98,4 +98,15 @@ router.get('/:orderId/totalprice', async (req, res) => {
   }
 });
 
+// Get all purchase orders with products
+router.get('/allorders', async (req, res) => {
+  try {
+    const ordersWithProducts = await purchaseOrderController.getAllPurchaseOrdersWithProducts();
+    res.json(ordersWithProducts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;

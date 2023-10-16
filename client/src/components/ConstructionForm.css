@@ -1,0 +1,47 @@
+
+/* Container for the entire form */
+.construction-form-container {
+    text-align: center;
+  }
+  
+  /* Header styles */
+  .construction-form-header {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Form container styles */
+  .construction-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Label styles */
+  .construction-label {
+    margin: 5px 0;
+  }
+  
+  /* Input styles */
+  .construction-input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Button styles */
+  .construction-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+  }
+  
+  .construction-button:hover {
+    background-color: #0056b3;
+  }

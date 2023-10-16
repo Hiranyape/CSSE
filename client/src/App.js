@@ -32,7 +32,7 @@ function App() {
     <div className="App">
      <BrowserRouter>
      {isSupplier ? <SupplierNavbar/> : <div></div>}
-     {isSupplier ? <StaffNavbar/> : <div></div>}
+     {isStaff ? <StaffNavbar/> : <div></div>}
 
       <Routes>
         <Route

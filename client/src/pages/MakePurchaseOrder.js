@@ -71,7 +71,7 @@ function MakePurchaseOrder() {
     }, 0);
 
     // Set the status based on the total price
-    const status = totalPrice < 20000 ? 'approved' : 'placed';
+    const status = totalPrice < 100000 ? 'approved' : 'placed';
 
     // Combine order data with the product details and status
     const combinedData = {

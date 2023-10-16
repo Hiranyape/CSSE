@@ -37,24 +37,31 @@ function StaffNavbar(props) {
       <Toolbar />
       <Divider />
       <List>
-        <Link to="/supplierDashboard" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/all-order" style={{ textDecoration: "none", color: "black" }}>
           <ListItem disablePadding>
             <ListItemButton>
               Dashboard
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/invoice" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/make-purchase-order" style={{ textDecoration: "none", color: "black" }}>
           <ListItem disablePadding>
             <ListItemButton>
-              Invoice
+              Make Purchase Order
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/supplierOrders" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/plaed-order" style={{ textDecoration: "none", color: "black" }}>
           <ListItem disablePadding>
             <ListItemButton>
-              Purchase Orders
+              Purchase Order Requests
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="/approved-order" style={{ textDecoration: "none", color: "black" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              Approved Orders
             </ListItemButton>
           </ListItem>
         </Link>

@@ -4,6 +4,7 @@ const { mongoose } = require('mongoose');
 
 const userRoutes = require("./routes/UserRoute");
 const productRoute = require("./routes/ProductRoute")
+const purchaseOrder = require("./routes/purchaseOrderRoutes")
 const OrderRoutes = require("./controllers/OrderController")
 const ConstructionsRoutes = require("./controllers/ConstructionsController")
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/user',userRoutes);
 app.use('/api/product',productRoute)
 app.use("/Order", OrderRoutes)
+app.use("/purchaseOrder", purchaseOrder)
 app.use("/Constructions", ConstructionsRoutes)
 
 const uri = process.env.URI;

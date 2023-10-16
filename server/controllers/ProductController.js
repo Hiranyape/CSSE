@@ -34,6 +34,33 @@ const addProduct = async(req,res) =>{
 
 }
 
+const addProductWithImageUrl = async (req, res) => {
+  const { name, description, image, imageUrl, price } = req.body;
+
+  // Check if required fields are provided
+  if (!name || !description || !price) {
+    return res.status(400).json({ error: "Please fill out all required fields" });
+  }
+
+  try {
+    // Create a new product document with the provided data
+    const newProduct = new ProductModel({
+      name,
+      description,
+      image,
+      imageUrl, // Store the image URL in the imageUrl field
+      price
+    });
+
+    // Save the new product to the database
+    await newProduct.save();
+
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create a new product" });
+  }
+};
+
 const getProduct = async (req, res) => {
     const { id } = req.params
     const product = await ProductModel.findById(id)
@@ -54,5 +81,6 @@ const getAllProducts = async(req, res) => {
 module.exports={
     addProduct,
     getAllProducts,
-    getProduct
+    getProduct,
+    addProductWithImageUrl
 }

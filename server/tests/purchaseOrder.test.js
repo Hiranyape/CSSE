@@ -193,4 +193,45 @@ describe('Purchase Order Controller', () => {
         stubFindById.restore();
       });
   });
+
+
+  describe('getAllApprovedPurchaseOrders', () => {
+    it('should return all approved purchase orders', async () => {
+      // Arrange: Prepare the test data
+      const approvedOrders = [
+        {
+          _id: 'order1',
+          status: 'approved',
+          // other order data
+        },
+        {
+          _id: 'order2',
+          status: 'approved',
+          // other order data
+        },
+        {
+          _id: 'order3',
+          status: 'placed',
+          // other order data
+        },
+      ];
+  
+      // Stub the getAllApproved method of purchaseOrderRepository to simulate database interaction
+      const stubGetAllApproved = sinon.stub(purchaseOrderRepository, 'getAllApproved');
+      stubGetAllApproved.resolves(approvedOrders);
+  
+      // Act: Call the function to test
+      const result = await purchaseOrderController.getAllApprovedPurchaseOrders();
+  
+      // Assert: Check the expected outcome
+      expect(result).to.be.an('array');
+      expect(result).to.have.lengthOf(3);
+      expect(result[0]._id).to.equal('order1');
+      expect(result[1]._id).to.equal('order2');
+  
+      // Restore the stub after the test
+      stubGetAllApproved.restore();
+    });
+  });  
+  
 });

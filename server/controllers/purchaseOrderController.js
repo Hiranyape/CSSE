@@ -5,6 +5,20 @@ const purchaseOrderRepository = require('../repositories/purchaseOrderRepository
 // Create a new purchase order
 async function createPurchaseOrder(orderData) {
   try {
+    // Calculate the total price of the products
+    let totalPrice = 0;
+    for (const item of orderData.items) {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        throw new Error('Product not found');
+      }
+      totalPrice += item.quantity * item.agreedPrice;
+    }
+
+    // Set the status based on the total price
+    const status = totalPrice < 100000 ? 'approved' : 'placed';
+    orderData.status = status;
+
     const purchaseOrder = await purchaseOrderRepository.create(orderData);
     return purchaseOrder;
   } catch (error) {

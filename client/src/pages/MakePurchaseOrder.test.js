@@ -1,7 +1,6 @@
 import React from 'react'; // Add this line
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import MakePurchaseOrder from './MakePurchaseOrder';
-import { useNavigate } from 'react-router-dom';
 
 // Mock the useNavigate hook
 jest.mock('react-router-dom', () => ({

@@ -78,9 +78,37 @@ const getAllProducts = async(req, res) => {
     res.status(200).json(products)
 }
 
+const deleteProductById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedProduct = await ProductModel.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.status(204).send(); // Respond with a 204 No Content status
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete the product" });
+  }
+};
+
+// Function to delete all products
+const deleteAllProducts = async (req, res) => {
+  try {
+    await ProductModel.deleteMany({}); // Delete all products from the collection
+    res.status(204).send(); // Respond with a 204 No Content status
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete all products" });
+  }
+};
+
 module.exports={
     addProduct,
     getAllProducts,
     getProduct,
-    addProductWithImageUrl
+    addProductWithImageUrl,
+    deleteProductById,
+    deleteAllProducts,
 }

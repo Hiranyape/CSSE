@@ -40,4 +40,31 @@ const getUsersByRole = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser, getUsersByRole };
+// Function to delete one supplier by ID
+const deleteSupplierById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedSupplier = await User.findByIdAndDelete(id);
+
+    if (!deletedSupplier) {
+      return res.status(404).json({ error: "Supplier not found" });
+    }
+
+    res.status(204).send(); 
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete the supplier" });
+  }
+};
+
+// Function to delete all suppliers
+const deleteAllSuppliers = async (req, res) => {
+  try {
+    await User.deleteMany({ role: 'supplier' }); 
+    res.status(204).send(); 
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete all suppliers" });
+  }
+};
+
+module.exports = { signupUser, loginUser, getUsersByRole, deleteSupplierById, deleteAllSuppliers };

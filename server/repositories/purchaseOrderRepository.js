@@ -51,9 +51,15 @@ class PurchaseOrderRepository {
     );
     return updatedOrder;
   }
-
   
-
+  // Delete all purchase orders
+  async deleteAllPurchaseOrders() {
+    try {
+      await PurchaseOrder.deleteMany({});
+    } catch (error) {
+      throw error;
+    }
+  }
  
 }
 

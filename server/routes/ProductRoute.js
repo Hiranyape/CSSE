@@ -16,5 +16,6 @@ router.post("/",upload.single("image"),productController.addProduct);
 router.get('/',productController.getAllProducts);
 router.get('/:id',productController.getProduct);
 router.post('/url',productController.addProductWithImageUrl);
+router.delete('/all',productController.deleteAllProducts);
 
 module.exports = router

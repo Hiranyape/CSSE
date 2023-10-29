@@ -41,7 +41,8 @@ function OrderDetails(props) {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ marginLeft: "300px", marginRight: "0" }}>
+      <br/>
       <h2>Order Details</h2>
       <div className="card">
         <div className="card-body">

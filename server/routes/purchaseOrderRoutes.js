@@ -108,5 +108,15 @@ router.get('/allorders', async (req, res) => {
   }
 });
 
+// Delete all purchase orders
+router.delete('/all', async (req, res) => {
+  try {
+    await purchaseOrderController.deleteAllPurchaseOrders();
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 module.exports = router;

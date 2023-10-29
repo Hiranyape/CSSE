@@ -103,12 +103,13 @@ function MakePurchaseOrder() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ marginLeft: "auto", marginRight: "0" }}>
+      <br/>
       <h2>Create Purchase Order</h2>
-      <div className="border p-4">
+      <div className="border p-4" style={{ marginLeft: "auto", marginRight: "0" }}>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Company Details:</label>
+            <label className="form-label text-end">Company Details:</label>
             <input
               type="text"
               className="form-control"
@@ -119,7 +120,7 @@ function MakePurchaseOrder() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="supplier" className="form-label">
+            <label htmlFor="supplier" className="form-label text-end">
               Supplier
             </label>
             <select
@@ -139,7 +140,7 @@ function MakePurchaseOrder() {
             </select>
           </div>
           <div className="mb-3">
-            <label className="form-label">Delivery Address Details:</label>
+            <label className="form-label text-end">Delivery Address Details:</label>
             <input
               type="text"
               className="form-control"
@@ -150,7 +151,7 @@ function MakePurchaseOrder() {
             />
           </div>
           <div className="mb-3">
-            <label className="form-label">Required By Date:</label>
+            <label className="form-label text-end">Required By Date:</label>
             <input
               type="date"
               className="form-control"
@@ -161,7 +162,7 @@ function MakePurchaseOrder() {
             />
           </div>
           <div className="mb-3">
-            <label className="form-label">Products:</label>
+            <label className="form-label text-end">Products:</label>
             <select
               name="selectedProduct"
               className="form-select"
@@ -177,7 +178,7 @@ function MakePurchaseOrder() {
               ))}
             </select>
             <div className="mb-2">
-              <label className="form-label">Quantity:</label>
+              <label className="form-label text-end">Quantity:</label>
               <input
                 type="number"
                 className="form-control"
@@ -188,7 +189,7 @@ function MakePurchaseOrder() {
               />
             </div>
             <div className="mb-2">
-              <label className="form-label">Agreed Price:</label>
+              <label className="form-label text-end">Agreed Price:</label>
               <input
                 type="number"
                 className="form-control"
@@ -204,12 +205,12 @@ function MakePurchaseOrder() {
           </div>
           {productDetails.map((item, index) => (
             <div key={index} className="mb-3">
-              <p>Product: {item.product}</p>
-              <p>Quantity: {item.quantity}</p>
-              <p>Agreed Price: {item.agreedPrice}</p>
+              <p className="text-end">Product: {item.product}</p>
+              <p className="text-end">Quantity: {item.quantity}</p>
+              <p className="text-end">Agreed Price: {item.agreedPrice}</p>
             </div>
           ))}
-          <div className="mb-3">
+          <div className="mb-3 text-end">
             <button type="submit" className="btn btn-success">
               Submit Purchase Order
             </button>

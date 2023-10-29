@@ -55,7 +55,8 @@ function ApprovedOrders() {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ marginLeft: "300px", marginRight: "0" }}>
+      <br/>
       <h2>Approved Orders</h2>
       <table className="table table-bordered">
         <thead className="table-dark">

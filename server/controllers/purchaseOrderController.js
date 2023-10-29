@@ -114,7 +114,14 @@ async function getAllWithProducts() {
   return orders;
 }
 
-
+async function deleteAllPurchaseOrders() {
+  try {
+    // Call the deleteAllPurchaseOrders function from the repository
+    await purchaseOrderRepository.deleteAllPurchaseOrders();
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   createPurchaseOrder,
@@ -126,5 +133,6 @@ module.exports = {
   calculateTotalPrice,
   getAllPurchaseOrders,
   getAllApprovedPurchaseOrders,
-  getAllWithProducts
+  getAllWithProducts,
+  deleteAllPurchaseOrders,
 };

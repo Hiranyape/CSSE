@@ -10,19 +10,37 @@ function DisplayAllOrders() {
 
   useEffect(() => {
     // Fetch placed orders from your backend API
-    axios.get('http://localhost:5000/purchaseOrder/all').then((response) => {
-      setPlacedOrders(response.data);
-    });
+    axios
+      .get('http://localhost:5000/purchaseOrder/all')
+      .then((response) => {
+        setPlacedOrders(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching placed orders:', error);
+        setLoading(false);
+      });
 
     // Fetch suppliers and products separately
-    axios.get('http://localhost:5000/api/user/users/supplier/').then((response) => {
-      setSuppliers(response.data);
-    });
+    axios
+      .get('http://localhost:5000/api/user/users/supplier/')
+      .then((response) => {
+        setSuppliers(response.data);
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
 
-    axios.get('http://localhost:5000/api/product/').then((response) => {
-      setProducts(response.data);
-      setLoading(false);
-    });
+    axios
+      .get('http://localhost:5000/api/product/')
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
   }, []);
 
   const getSupplierNameById = (supplierId) => {
@@ -35,12 +53,26 @@ function DisplayAllOrders() {
     return product ? product.name : 'Unknown Product';
   };
 
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      await axios.delete(`http://localhost:5000/purchaseOrder/${orderId}/delete`);
+      // After successful deletion, you may want to refresh the list of placed orders.
+      // You can do this by re-fetching the orders using your existing GET request.
+      const response = await axios.get('http://localhost:5000/purchaseOrder/all');
+      setPlacedOrders(response.data);
+    } catch (error) {
+      console.error('Error deleting order:', error);
+    }
+  };
+  
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ marginLeft: '300px', marginRight: '0' }}>
+      <br />
       <h2>All Orders</h2>
       <table className="table table-bordered">
         <thead className="table-dark">
@@ -74,7 +106,12 @@ function DisplayAllOrders() {
                   <tbody>
                     {order.items.map((item, index) => (
                       <tr key={index}>
-                        <td>{getProductNameById(item.product)}</td>
+                        <td>
+                          {/* Check if 'product' is an object or just an ID */}
+                          {typeof item.product === 'object'
+                            ? item.product.name // Use product name directly
+                            : getProductNameById(item.product)} {/* Use getProductNameById for ID */}
+                        </td>
                         <td>{item.quantity}</td>
                         <td>{item.agreedPrice}</td>
                       </tr>
@@ -83,6 +120,13 @@ function DisplayAllOrders() {
                 </table>
               </td>
               <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDeleteOrder(order._id)}
+                  disabled={order.status !== 'placed'} // Disable delete button for non-placed orders
+                >
+                  Delete
+                </button>
                 {/* Create a button to view order details */}
                 <Link to={`/order-details/${order._id}`} className="btn btn-primary">
                   View Details

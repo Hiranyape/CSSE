@@ -75,7 +75,8 @@ function PlacedOrders() {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ marginLeft: "300px", marginRight: "0" }}>
+      <br/>
       <h2>Placed Orders</h2>
       <table className="table table-bordered">
         <thead className="table-dark">
@@ -133,7 +134,12 @@ function PlacedOrders() {
                   <tbody>
                     {order.items.map((item, index) => (
                       <tr key={index}>
-                        <td>{getProductNameById(item.product)}</td>
+                        <td>
+                          {/* Check if 'product' is an object or just an ID */}
+                          {typeof item.product === 'object'
+                            ? item.product.name // Use product name directly
+                            : getProductNameById(item.product)} {/* Use getProductNameById for ID */}
+                        </td>
                         <td>{item.quantity}</td>
                         <td>{item.agreedPrice}</td>
                       </tr>

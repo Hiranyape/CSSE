@@ -56,8 +56,6 @@ function DisplayAllOrders() {
   const handleDeleteOrder = async (orderId) => {
     try {
       await axios.delete(`http://localhost:5000/purchaseOrder/${orderId}/delete`);
-      // After successful deletion, you may want to refresh the list of placed orders.
-      // You can do this by re-fetching the orders using your existing GET request.
       const response = await axios.get('http://localhost:5000/purchaseOrder/all');
       setPlacedOrders(response.data);
     } catch (error) {

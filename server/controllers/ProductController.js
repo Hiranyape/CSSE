@@ -1,6 +1,7 @@
 const ProductModel = require("../models/ProductModel")
-const cloudinary = require('cloudinary').v2
-const mongoose = require("mongoose")
+const cloudinary = require('cloudinary')
+const ProductFactory = require("../models/ProductFactory");
+const productFactory = new ProductFactory();
 
 cloudinary.config({
     cloud_name: "daxiby67v",
@@ -8,55 +9,39 @@ cloudinary.config({
     api_secret: "9mMH_qDU-VCPGyaRGpbHfJjfUx4"
 });
 
-const addProduct = async(req,res) =>{
-    const { name,description } = req.body;
-    let image;
-  
-    if (!req.file) {
-      return res.status(400).json({ error: "Please upload an image" });
-    }
-  
-    if (!name || !description ) {
-      return res.status(400).json({ error: "Please fill out all fields" });
-    }
-  
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: 'products',
-    });
-    image = result.secure_url;
-  
-    try {
-      const newProduct = await ProductModel.create({ name,description,image });
-      res.status(200).json(newProduct);
-    } catch (error) {
-      res.status(400).json({ error: "Failed to create new Product blog" });
-    }
-
-}
-
-const addProductWithImageUrl = async (req, res) => {
+const addProduct = async (req, res) => {
   const { name, description, image, imageUrl, price } = req.body;
 
-  // Check if required fields are provided
   if (!name || !description || !price) {
     return res.status(400).json({ error: "Please fill out all required fields" });
   }
 
-  try {
-    // Create a new product document with the provided data
-    const newProduct = new ProductModel({
+  let newProduct;
+
+  if (image) {
+    newProduct = productFactory.createProductWithImage(
       name,
       description,
       image,
-      imageUrl, // Store the image URL in the imageUrl field
       price
-    });
+    );
+  } else if (imageUrl) {
+    newProduct = productFactory.createProductWithImageUrl(
+      name,
+      description,
+      imageUrl,
+      price
+    );
+  } else {
+    return res.status(400).json({ error: "Invalid product creation request" });
+  }
 
-    // Save the new product to the database
+  try {
+    // Attempt to create and save the new product
     await newProduct.save();
-
     res.status(201).json(newProduct);
   } catch (error) {
+    console.error("Error creating product:", error);
     res.status(500).json({ error: "Failed to create a new product" });
   }
 };
@@ -108,7 +93,6 @@ module.exports={
     addProduct,
     getAllProducts,
     getProduct,
-    addProductWithImageUrl,
     deleteProductById,
     deleteAllProducts,
 }
